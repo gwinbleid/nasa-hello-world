@@ -1,0 +1,86 @@
+<style>
+  input[type="date"].ng-dirty.ng-invalid { border: 2px solid #ff0000 !important; }
+  input[type="date"].ng-dirty.ng-valid { border: 2px solid #6bc502 }
+</style>
+
+
+<div class="flex-container">
+
+  <div class="forms">
+    <div class="date_forms">
+      <form  [formGroup]="myForm" (ngSubmit)="sendRequest(myForm.value)">
+
+        <div class="form-group">
+          <label>Начальная точка наблюдений</label>
+          <input class="form-control" [class.ng-invalid]="!myForm.valid && myForm.touched" type="date" [formControl]="past">
+          <div *ngIf="!myForm.controls['past'].valid && myForm.controls['past'].touched" class="text-danger">Начальная точка неверна</div>
+          <div *ngIf="myForm.controls['past'].hasError('required') && myForm.controls['past'].touched" class="text-danger">Введите конечную точку</div>
+          <div *ngIf="myForm.controls['past'].hasError('tooOldTime') && myForm.controls['past'].touched" class="text-danger">Нет данных ранее 1900-го года</div>
+        </div>
+
+        <div class="form-group">
+          <label>Начальная точка наблюдений</label>
+          <input class="form-control" [class.ng-invalid]="!myForm.valid && myForm.touched" type="date" [formControl]="future">
+          <div *ngIf="!myForm.controls['future'].valid && myForm.controls['future'].touched" class="text-danger">Конечная точка неверна</div>
+          <div *ngIf="myForm.controls['future'].hasError('required') && myForm.controls['future'].touched" class="text-danger">Введите конечную точку</div>
+          <div *ngIf="myForm.controls['future'].hasError('tooLateTime') && myForm.controls['future'].touched" class="text-danger">Данные позже 1-го января 2101-го отсутствуют</div>
+        </div>
+
+        <div *ngIf="!myForm.valid && myForm.touched" class="text-danger">Неверная форма записи</div>
+        <div *ngIf="myForm.hasError('wrongDateInfo') && myForm.touched" class="text-danger">Начальная дата не должна превышать конечную</div>
+        <div *ngIf="myForm.hasError('wrongCountOfDays') && myForm.touched" class="text-danger">Разница между точками отсчёта. должно состовлять не более 7-ми дней</div>
+
+        <button [disabled]="!myForm.valid" class="btn btn-primary" type="submit">Отобразить</button>
+      </form>
+    </div>
+
+    <div class="search_forms">
+      <div class="form-group">
+        <label>Поиск</label>
+        <input [(ngModel)]="searchItems" (keyup)="search()"  class="form-control" type="text">
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="searchArray.length !== 0" class="row"><p>Отображение данных с <b>{{pastValue | date}}</b>  по  <b>{{futureValue | date}}</b></p></div>
+
+  <div class="table" [ngStyle]="{'height': productsPerPage * 60 + 'px'}" *ngIf="searchArray.length !== 0">
+    <div class="row header">
+      <div class="item">ID</div>
+      <div class="item">Наименование</div>
+      <div class="item">Абсолютная магнитуда</div>
+      <div class="item">Дата обнаружения</div>
+    </div>
+
+    <div *ngFor="let i of visibleData" class="row" (click)="goToDetails(i.id)">
+      <div class="item">{{i.id}}</div>
+      <div class="item">{{i.name}}</div>
+      <div class="item">{{i.absolute_magnitude_h}}</div>
+      <div class="item">{{i.close_approach_data[0].close_approach_date | date}}</div>
+    </div>
+  </div>
+
+  <div class="search_error" *ngIf="searchArray.length === 0">
+    Данные отсутствуют
+  </div>
+
+  <div class="pgn_row" *ngIf="searchArray.length !== 0">
+    <div class="btn_for_pagn form-inline pull-xs-left m-r-1">
+      <select class="form-control" [value]="productsPerPage"
+              (change)="changePageSize($event.target.value)">
+        <option value="4">4 per Page</option>
+        <option value="6">6 per Page</option>
+        <option value="8">8 per Page</option>
+      </select>
+    </div>
+
+    <div class="btn_for_pagn btn-group" *ngIf="searchArray.length !== 0">
+      <button *counter="let page of pageCount" (click)="changePage(page)"
+              class="btn btn-outline-primary" [class.active]="page == selectedPage">
+        {{page}}
+      </button>
+    </div>
+</div>
+
+
+</div>

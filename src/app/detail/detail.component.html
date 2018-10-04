@@ -1,0 +1,52 @@
+<div class="flex-container">
+  <div class="goBackDiv" (click)="goBack()">
+    <span class="goBack">
+      <i class="fas fa-chevron-left"></i>
+      <span>Назад</span>
+    </span>
+  </div>
+
+  <div>
+    <h1>
+      {{data.name}}
+    </h1>
+  </div>
+
+  <div class="description">
+    <div class="s1">
+      <h3>Основные данные</h3>
+      <div class="main-data">
+        <div class="main-data-colummn flex-right">
+          <div>Обозначение</div>
+          <div>Магнитуда</div>
+          <div>Потенциально опасен</div>
+          <div>что-то там</div>
+          <div>максимальное значение диаметра</div>
+          <div>Минимальное занчение диаметра</div>
+        </div>
+
+        <div class="main-data-colummn">
+          <div>{{data.name}}</div>
+          <div>{{data.absolute_magnitude_h}}</div>
+          <div>{{data.is_potentially_hazardous_asteroid}}</div>
+          <div>{{data.is_sentry_object}}</div>
+          <div>{{data.estimated_diameter.meters.estimated_diameter_max}}</div>
+          <div>{{data.estimated_diameter.meters.estimated_diameter_min}}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="s2">
+      <h4>Данные с околоземной орбиты</h4>
+      <div class="orbital_data">
+
+      </div>
+    </div>
+
+
+  </div>
+
+
+
+
+</div>

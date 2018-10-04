@@ -1,0 +1,63 @@
+.return_button {
+  height: 50px;
+  color: white;
+  background-color: black;
+}
+
+.row {
+  display: flex;
+}
+
+.flex-container {
+  margin-left: 60px;
+  margin-right: 60px;
+}
+
+.goBack {
+  font-size: 40px;
+  margin-bottom: 30px;
+}
+
+span {
+  margin-left: 10px;
+}
+
+span:hover {
+  background: aliceblue;
+  cursor: pointer;
+}
+
+span:hover {
+  background: aliceblue;
+  cursor: pointer;
+}
+
+.goBackDiv {
+  margin-bottom: 30px;
+}
+
+.main-data {
+  border-right: 2px solid #000000;
+  display: flex;
+  padding-right: 10px;
+}
+
+.main-data-colummn {
+  margin-left: 5px;
+}
+
+.flex-right {
+  display: flex;
+  flex-direction: column;;
+  align-items: flex-end;
+}
+
+.description {
+  display: flex;
+  margin-top: 30px;
+  border-top: 2px solid #000000;
+}
+
+.s1 {
+  margin-right: 20px;
+}
