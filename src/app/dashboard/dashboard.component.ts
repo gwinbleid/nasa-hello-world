@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NasaService } from '../services/nasa.service';
 import {FormBuilder, FormGroup, Validators, AbstractControl, FormControl} from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { NgRedux, select } from '@angular-redux/store';
 import {IAppState} from '../store';
 import {ADD_INFO} from '../actions';
@@ -14,9 +14,9 @@ import {ADD_INFO} from '../actions';
 export class DashboardComponent implements OnInit {
   futureValue;
   pastValue;
-  searchArray;
-  searchItems;
-  data;
+  searchArray = [];
+  searchItems = '';
+  data = [];
   myForm: FormGroup;
   past: AbstractControl;
   future: AbstractControl;
@@ -24,11 +24,12 @@ export class DashboardComponent implements OnInit {
   public productsPerPage;
   public selectedPage;
 
-  visibleData;
+  visibleData = [];
 
   constructor(
     private nasa: NasaService,
     private router: Router,
+    private route: ActivatedRoute,
     fb: FormBuilder,
     private ngRedux: NgRedux<IAppState>
   ) {
@@ -42,6 +43,19 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {
+    /*this.route.data.subscribe(value => {
+      console.log(value);
+
+      this.data = value.dashboard.data;
+      this.pastValue = value.dashboard.pastValue;
+      this.futureValue = value.dashboard.futureValue;
+      this.searchArray = value.dashboard.searchArray;
+      this.productsPerPage = value.dashboard.productsPerPage;
+      this.selectedPage = value.dashboard.selectedPage;
+      this.visibleData = value.dashboard.visibleData;
+      this.searchItems = value.dashboard.searchItems;
+    });*/
+
     let a = this.ngRedux.getState();
     if (a.data.length === 0) {
       let today = new Date();
@@ -106,6 +120,7 @@ export class DashboardComponent implements OnInit {
   }
 
   search() {
+    console.log("event.works");
     this.searchArray = this.data.filter(item => {
       if (String(item.id).includes(this.searchItems) || String(item.name).includes(this.searchItems) || String(item.absolute_magnitude_h).includes(this.searchItems) ) {
         return true;

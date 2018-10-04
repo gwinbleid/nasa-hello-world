@@ -14,10 +14,11 @@ import { NasaService } from './services/nasa.service';
 import { NgRedux, NgReduxModule } from '@angular-redux/store';
 import { IAppState, rootReducer } from './store';
 import { CounterDirective } from './pipes/counter.directive';
+import { DashboardResolver } from './services/dashboardResolver';
 
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
-  { path: 'dashboard', component: DashboardComponent },
+  { path: 'dashboard', component: DashboardComponent, /*resolve: { dashboard: DashboardResolver }*/ },
   { path: 'asteroid/:id', component: DetailComponent, resolve: {asteroid: AsteroidResolver} },
   { path: '**', redirectTo: '/dashboard', pathMatch: 'full' }
 ];
@@ -38,7 +39,7 @@ const routes: Routes = [
     ReactiveFormsModule,
     NgReduxModule
   ],
-  providers: [NasaService, AsteroidResolver],
+  providers: [NasaService, AsteroidResolver, DashboardResolver],
   bootstrap: [AppComponent]
 })
 export class AppModule {
