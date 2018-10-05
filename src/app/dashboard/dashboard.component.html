@@ -13,24 +13,22 @@
         <div class="form-group">
           <label>Начальная точка наблюдений</label>
           <input class="form-control" type="date" [formControl]="past">
-          <div *ngIf="!myForm.controls['past'].valid && myForm.controls['past'].touched" class="text-danger">Начальная точка неверна</div>
-          <div *ngIf="myForm.controls['past'].hasError('required') && myForm.controls['past'].touched" class="text-danger">Введите конечную точку</div>
-          <div *ngIf="myForm.controls['past'].hasError('tooOldTime') && myForm.controls['past'].touched" class="text-danger">Нет данных ранее 1900-го года</div>
         </div>
 
         <div class="form-group">
           <label>Начальная точка наблюдений</label>
           <input class="form-control" type="date" [formControl]="future">
-          <div *ngIf="!myForm.controls['future'].valid && myForm.controls['future'].touched" class="text-danger">Конечная точка неверна</div>
-          <div *ngIf="myForm.controls['future'].hasError('required') && myForm.controls['future'].touched" class="text-danger">Введите конечную точку</div>
-          <div *ngIf="myForm.controls['future'].hasError('tooLateTime') && myForm.controls['future'].touched" class="text-danger">Данные позже 1-го января 2101-го отсутствуют</div>
         </div>
 
-        <div *ngIf="!myForm.valid && myForm.touched" class="text-danger">Неверная форма записи</div>
+        <div *ngIf="myForm.controls['past'].hasError('required') && myForm.controls['past'].touched" class="text-danger">Введите начальную точку</div>
+        <div *ngIf="myForm.controls['past'].hasError('tooOldTime') && myForm.controls['past'].touched" class="text-danger">Нет данных ранее 1900-го года</div>
+        <div *ngIf="myForm.controls['future'].hasError('required') && myForm.controls['future'].touched" class="text-danger">Введите конечную точку</div>
+        <div *ngIf="myForm.controls['future'].hasError('tooLateTime') && myForm.controls['future'].touched" class="text-danger">Данные позже 1-го января 2101-го отсутствуют</div>
+        
         <div *ngIf="myForm.hasError('wrongDateInfo') && myForm.touched" class="text-danger">Начальная дата не должна превышать конечную</div>
         <div *ngIf="myForm.hasError('wrongCountOfDays') && myForm.touched" class="text-danger">Разница между точками отсчёта. должно состовлять не более 7-ми дней</div>
 
-        <button [disabled]="!myForm.valid" class="btn btn-success" [class.btn-primary]="!myForm.valid && myForm.untouched" [class.btn-danger]="!myForm.valid && myForm.dirty" type="submit">Отобразить</button>
+        <button class="btn" [disabled]="!myForm.valid" [class.btn-secondary]="!myForm.valid && myForm.untouched" [class.btn-success]="myForm.valid" [class.btn-danger]="!myForm.valid && myForm.dirty" type="submit">Отобразить</button>
       </form>
     </div>
 
